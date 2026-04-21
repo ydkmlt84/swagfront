@@ -1,0 +1,20 @@
+{
+  "name": "swagfront",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "yarn@4.9.1",
+  "workspaces": [
+    "shared",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "yarn workspace @swagfront/shared build && yarn workspace @swagfront/backend build && yarn workspace @swagfront/frontend build",
+    "dev": "node scripts/dev.mjs",
+    "dev:backend": "yarn workspace @swagfront/backend dev",
+    "dev:frontend": "yarn workspace @swagfront/frontend dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
