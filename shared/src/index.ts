@@ -35,9 +35,20 @@ export type ProxyRow = ProxyConfigInfo & {
   detectedProxyTarget: string | null;
 };
 
+export type AppUpdateInfo = {
+  enabled: boolean;
+  currentVersion: string;
+  latestVersion: string | null;
+  latestUrl: string | null;
+  updateAvailable: boolean;
+  checkedAt: string | null;
+  error: string | null;
+};
+
 export type ProxiesResponse = {
   generatedAt: string;
   includeSamples: boolean;
   warnings: string[];
+  app: AppUpdateInfo;
   rows: ProxyRow[];
 };

@@ -7,6 +7,7 @@ import { config, envPath } from "./config.js";
 import { inspectContainers } from "./dockerClient.js";
 import { matchProxyToContainer } from "./dockerMatching.js";
 import { readProxyConfigs } from "./proxyConfigParser.js";
+import { getAppUpdateInfo } from "./releaseCheck.js";
 
 const app = express();
 const currentFilePath = fileURLToPath(import.meta.url);
@@ -27,6 +28,7 @@ app.get("/api/proxies", async (request, response) => {
   try {
     const proxyConfigs = await readProxyConfigs(config.swagProxyConfsDir, includeSamples, config.baseDomain);
     const warnings: string[] = [];
+    const appInfo = await getAppUpdateInfo(config.releaseRepo);
     let containers: DockerContainerInfo[] = [];
 
     try {
@@ -58,6 +60,7 @@ app.get("/api/proxies", async (request, response) => {
       generatedAt: new Date().toISOString(),
       includeSamples,
       warnings,
+      app: appInfo,
       rows
     };
 

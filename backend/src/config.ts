@@ -16,5 +16,6 @@ export const config = {
   port: 5559,
   swagProxyConfsDir: process.env.SWAG_PROXY_CONFS_DIR ?? "/swag/proxy-confs",
   dockerSocketPath: process.env.DOCKER_SOCKET_PATH ?? defaultDockerSocketPath(),
-  baseDomain: (process.env.BASE_DOMAIN ?? "").trim()
+  baseDomain: (process.env.BASE_DOMAIN ?? "").trim(),
+  releaseRepo: (process.env.RELEASE_REPO ?? "").trim()
 };

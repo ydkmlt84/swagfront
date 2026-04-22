@@ -1,7 +1,27 @@
-import { ProxiesResponse } from '@swagfront/shared'
+import { AppUpdateInfo, ProxiesResponse } from '@swagfront/shared'
 
 type HeroProps = {
   data: ProxiesResponse | null
+}
+
+function versionSummary(app: AppUpdateInfo | undefined): string {
+  if (!app) {
+    return 'Loading...'
+  }
+
+  if (!app.enabled) {
+    return app.currentVersion
+  }
+
+  if (app.updateAvailable && app.latestVersion) {
+    return `${app.currentVersion} -> ${app.latestVersion}`
+  }
+
+  if (app.error) {
+    return `${app.currentVersion} | check unavailable`
+  }
+
+  return `${app.currentVersion} | current`
 }
 
 export function Hero({ data }: HeroProps) {
@@ -9,6 +29,25 @@ export function Hero({ data }: HeroProps) {
     <header className="hero">
       <div className="hero-copy">
         <div className="title-row">
+          <div className="hero-version">
+            <span className="hero-version-text">{versionSummary(data?.app)}</span>
+            {data?.app?.updateAvailable && data.app.latestUrl ? (
+              <a
+                className="hero-version-link"
+                href={data.app.latestUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Update available
+              </a>
+            ) : data?.app?.error ? (
+              <span className="hero-version-note">Release check unavailable</span>
+            ) : data?.app?.enabled ? (
+              <span className="hero-version-note">No update available</span>
+            ) : (
+              <span className="hero-version-note">Update check off</span>
+            )}
+          </div>
           <div className="hero-logo-wrap">
             <img
               className="hero-logo"

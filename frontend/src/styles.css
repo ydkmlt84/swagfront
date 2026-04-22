@@ -157,13 +157,46 @@ input {
 }
 
 .title-row {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  padding: 24px 28px;
+  padding: 34px 28px 24px;
   background: linear-gradient(180deg, rgba(12, 20, 61, 0.98), rgba(8, 15, 46, 0.98));
   border-radius: 28px;
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.36);
+}
+
+.hero-version {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  text-align: right;
+}
+
+.hero-version-text {
+  color: #d9e5ff;
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.hero-version-link {
+  color: #8ef6ef;
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.hero-version-link:hover {
+  text-decoration: underline;
+}
+
+.hero-version-note {
+  color: #9aabd9;
+  font-size: 0.76rem;
+  line-height: 1.2;
 }
 
 .hero-logo-wrap {

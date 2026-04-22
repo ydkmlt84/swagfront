@@ -24,6 +24,8 @@ services:
     environment:
       SWAG_PROXY_CONFS_DIR: /swag/proxy-confs
       BASE_DOMAIN: example.com
+      # Optional: show latest GitHub release info in the UI
+      # RELEASE_REPO: owner/repo
     ports:
       - "5559:5559"
 ```
@@ -36,6 +38,18 @@ Key mounts:
 ## Matching notes
 
 The matching logic is intentionally simple and conservative. It is possible a match exists between a config file and a currently running container, and no match is found.
+
+## Optional release check
+
+If you want the UI to show the running app version and whether a newer GitHub release exists, set:
+
+- `RELEASE_REPO=owner/repo`
+
+Example:
+
+- `RELEASE_REPO=ydkmlt84/swagfront`
+
+When unset, the UI still shows the current running version, but update checking stays off.
 
 ## Safety
 
