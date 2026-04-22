@@ -10,9 +10,16 @@ import {
 type PosterCardProps = {
   row: ProxyRow
   accentClass: string
+  dockerEnabled: boolean
 }
 
-export function PosterCard({ row, accentClass }: PosterCardProps) {
+export function PosterCard({
+  row,
+  accentClass,
+  dockerEnabled,
+}: PosterCardProps) {
+  const status = statusText(row, dockerEnabled)
+
   function openUrl() {
     if (!row.publicUrls[0]) {
       return
@@ -44,7 +51,7 @@ export function PosterCard({ row, accentClass }: PosterCardProps) {
         <div className="poster-shape poster-shape-one" />
         <div className="poster-shape poster-shape-two" />
         <div className="poster-title-wrap">
-          <span className="poster-kicker">{statusText(row)}</span>
+          {status ? <span className="poster-kicker">{status}</span> : null}
           <strong className="poster-title">{cardTitle(row)}</strong>
         </div>
       </div>
@@ -57,11 +64,15 @@ export function PosterCard({ row, accentClass }: PosterCardProps) {
       </div>
       <div className="poster-overlay">
         <span>URL: {displayUrl(row)}</span>
-        <span>Container: {row.docker?.name ?? 'Unmatched'}</span>
         <span>Target: {targetText(row)}</span>
-        <span>
-          Ports: {row.docker?.portMappings.join(', ') || row.upstreamPort || 'None'}
-        </span>
+        {dockerEnabled ? (
+          <>
+            <span>Container: {row.docker?.name ?? 'Unmatched'}</span>
+            <span>
+              Ports: {row.docker?.portMappings.join(', ') || row.upstreamPort || 'None'}
+            </span>
+          </>
+        ) : null}
       </div>
     </article>
   )

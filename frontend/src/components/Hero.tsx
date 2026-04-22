@@ -61,6 +61,9 @@ export function Hero({ data }: HeroProps) {
               Super simple SWAG front showing your proxied containers and where
               they target to. No actions can be performed to your SWAG config
               or Docker containers.
+              {data && !data.dockerEnabled ? (
+                <span className="subtle-accent"> Docker socket disabled.</span>
+              ) : null}
             </p>
           </div>
         </div>

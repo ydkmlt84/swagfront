@@ -30,17 +30,25 @@ app.get("/api/proxies", async (request, response) => {
     const warnings: string[] = [];
     const appInfo = await getAppUpdateInfo(config.releaseRepo);
     let containers: DockerContainerInfo[] = [];
-
-    try {
-      containers = await inspectContainers(config.dockerSocketPath);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown Docker inspection error";
-      console.warn(`[api] Docker metadata unavailable: ${message}`);
-      warnings.push(`Docker metadata unavailable: ${message}`);
+    if (config.useDocker) {
+      try {
+        containers = await inspectContainers(config.dockerSocketPath);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Unknown Docker inspection error";
+        console.warn(`[api] Docker metadata unavailable: ${message}`);
+        warnings.push(`Docker metadata unavailable: ${message}`);
+      }
     }
 
     const rows: ProxyRow[] = proxyConfigs.map((proxyConfig) => {
-      const match = matchProxyToContainer(proxyConfig, containers);
+      const match = config.useDocker
+        ? matchProxyToContainer(proxyConfig, containers)
+        : {
+            docker: null,
+            confidence: "none" as const,
+            matchedContainerName: null,
+            reason: "Docker socket disabled"
+          };
 
       return {
         ...proxyConfig,
@@ -59,6 +67,7 @@ app.get("/api/proxies", async (request, response) => {
     const payload: ProxiesResponse = {
       generatedAt: new Date().toISOString(),
       includeSamples,
+      dockerEnabled: config.useDocker,
       warnings,
       app: appInfo,
       rows

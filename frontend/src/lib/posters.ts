@@ -80,7 +80,11 @@ export function displayUrl(row: ProxyRow): string {
   return url.replace(/^https?:\/\//, '')
 }
 
-export function statusText(row: ProxyRow): string {
+export function statusText(row: ProxyRow, dockerEnabled: boolean): string {
+  if (!dockerEnabled) {
+    return ''
+  }
+
   if (!row.docker) {
     return row.match.confidence === 'none' ? 'No match' : 'Uncertain'
   }

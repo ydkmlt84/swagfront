@@ -162,6 +162,7 @@ export function App() {
             key={row.filename}
             row={row}
             accentClass={cardAccentClass(index, gridColumns)}
+            dockerEnabled={data?.dockerEnabled ?? true}
           />
         ))}
 

@@ -48,6 +48,7 @@ export type AppUpdateInfo = {
 export type ProxiesResponse = {
   generatedAt: string;
   includeSamples: boolean;
+  dockerEnabled: boolean;
   warnings: string[];
   app: AppUpdateInfo;
   rows: ProxyRow[];

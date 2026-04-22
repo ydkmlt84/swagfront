@@ -220,6 +220,10 @@ input {
   line-height: 1.5;
 }
 
+.subtle-accent {
+  color: #9fe8ff;
+}
+
 .hero-meta {
   display: flex;
   gap: 12px;
