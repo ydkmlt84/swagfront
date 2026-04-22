@@ -1,14 +1,12 @@
 services:
   swagfront:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: swagfront
+    hostname: swagfront
+    volumes:
+      - <your_host_proxyconfs_folder>:/swag/proxy-confs:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       SWAG_PROXY_CONFS_DIR: /swag/proxy-confs
-      DOCKER_SOCKET_PATH: /var/run/docker.sock
       BASE_DOMAIN: example.com
     ports:
-      - "5559:5559"
-    volumes:
-      - /swag/proxy-confs:/swag/proxy-confs:ro
-      - /var/run/docker.sock:/var/run/docker.sock
+      - '5559:5559'
