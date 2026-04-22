@@ -62,11 +62,23 @@ jobs:
       - name: Update package versions
         run: node scripts/set-version.mjs ${{ steps.version.outputs.value }}
 
+      - name: Ensure version changed
+        shell: bash
+        run: |
+          if git diff --quiet -- package.json backend/package.json frontend/package.json shared/package.json; then
+            echo "Version ${{ steps.version.outputs.value }} is already set in the repo"
+            exit 1
+          fi
+
       - name: Install dependencies
         run: yarn install --immutable
 
       - name: Build
         run: yarn build
+
+      - name: Discard transient Yarn install state
+        shell: bash
+        run: git checkout -- .yarn/install-state.gz || true
 
       - name: Commit release version
         shell: bash
