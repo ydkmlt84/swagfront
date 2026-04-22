@@ -1,7 +1,7 @@
 {
   "name": "swagfront",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "packageManager": "yarn@4.9.1",
   "workspaces": [
     "shared",
