@@ -16,6 +16,7 @@ Small read-only visibility app for inspecting SWAG reverse proxy config files an
 ```yaml
 services:
   swagfront:
+    image: ghcr.io/ydkmlt84/swagfront
     container_name: swagfront
     hostname: swagfront
     volumes:
